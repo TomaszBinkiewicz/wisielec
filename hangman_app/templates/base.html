@@ -22,6 +22,9 @@
         <a href="{% url 'login' %}">Login/register</a>
         {% endif %}
     </nav>
+    {% if logged %}
+        <p> Loogged as {{ logged }}</p>
+    {% endif %}
 <br>
 </body>
 </html>

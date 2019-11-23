@@ -41,6 +41,7 @@ class AddWord(View):
 
 
 class Play(View):
+    # TODO: choosing letters instead of writing them in form
     def get(self, request):
         logged = request.session.get('logged_user')
         request.session['counter'] = 0
@@ -69,28 +70,27 @@ class Play(View):
                                    'used_letters': used_letters, 'logged': logged})
         used_letters.append(guess)
         request.session['used_letters'] = used_letters
-        if request.session['counter'] == max_counter:
-            return redirect('game_over')
-        else:
-            new_display = ''
-            if guess in word_to_guess:
-                for i in range(len(word_to_guess)):
-                    if display[2 * i] != '_':
-                        new_display += display[2 * i] + ' '
+        new_display = ''
+        if guess in word_to_guess:
+            for i in range(len(word_to_guess)):
+                if display[2 * i] != '_':
+                    new_display += display[2 * i] + ' '
+                else:
+                    if word_to_guess[i] == guess:
+                        new_display += guess + ' '
                     else:
-                        if word_to_guess[i] == guess:
-                            new_display += guess + ' '
-                        else:
-                            new_display += '_ '
-                request.session['display'] = new_display
-            else:
-                new_display = display
-                request.session['counter'] += 1
-            if '_' in new_display:
-                return render(request, 'play.html',
-                              context={'hidden': new_display, 'counter': request.session['counter'],
-                                       'used_letters': used_letters, 'logged': logged})
-            return redirect('save_score')
+                        new_display += '_ '
+            request.session['display'] = new_display
+        else:
+            new_display = display
+            request.session['counter'] += 1
+            if request.session['counter'] == max_counter:
+                return redirect('game_over')
+        if '_' in new_display:
+            return render(request, 'play.html',
+                          context={'hidden': new_display, 'counter': request.session['counter'],
+                                   'used_letters': used_letters, 'logged': logged})
+        return redirect('save_score')
 
 
 class AllScores(View):
@@ -111,6 +111,16 @@ class GameOver(View):
     def get(self, request):
         logged = request.session.get('logged_user')
         word = request.session.get('word_to_guess')
+        if logged:
+            player = Player.objects.get(nick=logged)
+        else:
+            player = Player.objects.get(nick='anonymous_player')
+        player.games_played += 1
+        player.save()
+        del request.session['counter']
+        del request.session['word_to_guess']
+        del request.session['used_letters']
+        del request.session['display']
         return render(request, 'game_over.html', context={'logged': logged, 'word': word})
 
 
@@ -134,12 +144,10 @@ class SaveScore(View):
         if logged:
             player = Player.objects.get(nick=logged)
             player.total_points += score
-            player.games_played += 1
-            player.save()
         else:
             player = Player.objects.get(nick='anonymous_player')
-            player.games_played += 1
-            player.save()
+        player.games_played += 1
+        player.save()
         Score.objects.create(player_id=player, word_id=word, score=score)
         del request.session['counter']
         del request.session['word_to_guess']
@@ -174,7 +182,7 @@ class Login(View):
             elif not new_passwd:
                 return self.get(request, register_error_message='Please enter a valid password')
             try:
-                players = Player.objects.get(nick=new_nick)
+                Player.objects.get(nick=new_nick)
             except ObjectDoesNotExist:
                 new_player = Player()
                 new_player.nick = new_nick
