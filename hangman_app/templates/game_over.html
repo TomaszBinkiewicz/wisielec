@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: game over</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <div>
+        <h4>Przegrana!</h4>
+        Słowo do odgadnięcia: {{ word }}
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: login</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <form method="post">
+        <h4>Login player</h4>
+        Login
+        <input type="text" name="nick">
+        Password
+        <input type="password" name="password">
+        <input type="submit" name="login" value="login">
+        {% csrf_token %}
+    </form>
+    <p style="text-align: center"><b>{{ login_error_message }}</b></p>
+    <br>
+    <form method="post">
+        <h4>Register new player</h4>
+        New nick
+        <input type="text" name="nick">
+        New password
+        <input type="password" name="password">
+        <input type="submit" name="register" value="register">
+        {% csrf_token %}
+    </form>
+    <p style="text-align: center;">{{ register_error_message }}</p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: save score</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <div>
+        <h4>Wygrałeś!</h4>
+        Odgadnięte słowo: {{ word }}
+        Wynik: {{ score }}
+        <form method="post">
+            Czy chcesz zapisać swój wynik?
+            <br>
+            <input type="submit" value="save">
+            {% csrf_token %}
+        </form>
+    </div>
+</body>
+</html>

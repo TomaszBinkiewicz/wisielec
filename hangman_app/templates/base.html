@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <style>
+        a{
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h3>Hangman</h3>
+    <nav>
+        <a href="{% url 'play' %}">PLAY</a>
+        <a href="{% url 'all_scores' %}">SCORES</a>
+        <a href="{% url 'all_players' %}">PLAYERS</a>
+        <a href="{% url 'add_word' %}">ADD WORD</a>
+        {% if logged %}
+        <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login/register</a>
+        {% endif %}
+    </nav>
+<br>
+</body>
+</html>

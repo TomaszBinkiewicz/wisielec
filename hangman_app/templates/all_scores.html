@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: scores</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <div>
+        <table border="1">
+            <tr>
+                <th>
+                    player's nick
+                </th>
+                <th>
+                    word
+                </th>
+                <th>
+                    score
+                </th>
+            </tr>
+            {% for score in scores %}
+                <tr>
+                    <td>
+                        {{ score.player_id.nick }}
+                    </td>
+                    <td>
+                        {{ score.word_id.word }}
+                    </td>
+                    <td>
+                        {{ score.score }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

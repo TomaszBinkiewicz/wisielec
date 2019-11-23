@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: play</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    {{ hidden }}
+    <br><br>
+    <form method="post">
+        guess letter:
+        <input type="text" name="guess">
+        <input type="submit" value="guess">
+        {% csrf_token %}
+    </form>
+    <br>
+    użyte litery: {% for letter in used_letters %}{{ letter }} {% endfor %}
+    <br><br>
+    Liczba pomyłek: {{ counter }}
+</body>
+</html>

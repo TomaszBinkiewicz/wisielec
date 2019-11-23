@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <div>
+        <table border="1">
+            <tr>
+                <th>
+                    player's nick
+                </th>
+                <th>
+                    games played
+                </th>
+                <th>
+                    total points
+                </th>
+            </tr>
+            {% for player in players %}
+                <tr>
+                    <td>
+                        {{ player.nick }}
+                    </td>
+                    <td>
+                        {{ player.games_played }}
+                    </td>
+                    <td>
+                        {{ player.total_points }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

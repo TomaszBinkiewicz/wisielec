@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman: add word</title>
+</head>
+<body>
+    {% include 'base.html' with logged=logged %}
+    <form method="post">
+        <input type="text" name="word">
+        <input type="submit" value="add">
+        {% csrf_token %}
+    </form>
+    {{ message }}
+    <p>Number of words in base: {{ num_of_words }}</p>
+</body>
+</html>
