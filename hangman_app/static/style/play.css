@@ -1,0 +1,5 @@
+.used_letter {
+    cursor: not-allowed;
+    background-color: darkgray;
+    width: 30px;
+}

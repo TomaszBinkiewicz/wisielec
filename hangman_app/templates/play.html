@@ -3,99 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman: play</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/play.css' %}">
 </head>
 <body>
-    {% include 'base.html' with logged=logged %}
-    {{ hidden }}
-    <br><br>
-    <form method="post">
-        guess letter:
-        <input type="text" name="guess">
-        <input type="submit" value="guess">
-        {% csrf_token %}
-    </form>
-    <br>
-    użyte litery: {% for letter in used_letters %}{{ letter }} {% endfor %}<br>
-    <br><br>
-    <div>
-        {% if counter == 1 %}
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            ____<br>
-        {% elif counter == 2 %}
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 3 %}
-            &emsp;|-----------<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 4 %}
-            &emsp;|-/----------<br>
-            &emsp;|/<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 5 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 6 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 7 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 8 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/|<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 9 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/|\<br>
-            &emsp;|<br>
-            __|__<br>
-        {% elif counter == 10 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/|\<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/ <br>
-            __|__<br>
-        {% elif counter == 11 %}
-            &emsp;|-/----------|<br>
-            &emsp;|/&emsp;&emsp;&emsp;&ensp;|<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;O<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/|\<br>
-            &emsp;|&emsp;&emsp;&emsp;&ensp;/ \<br>
-            __|__<br>
-        {% endif %}
+{% include 'base.html' with logged=logged %}
+{{ hidden }}
+<br><br>
+<form method="post">
+    guess letter:
+    {% csrf_token %}
+    <div class="letter-buttons">
+        {% for letter in 'aąbcćdeęfghijklłmnńoóprsśtuwyzźż' %}
+            <button value="{{ letter }}" name="guess">{{ letter }}</button>
+        {% endfor %}
     </div>
+</form>
+<br>
+<div class="used_letters_div">
+użyte litery: {% for letter in used_letters %}<span class="used_letters">{{ letter }}</span>{% endfor %}<br>
+</div>
+    <br><br>
+{% include 'play-drawings.html' with counter=counter %}
+{% load static %}
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="{% static "js/play.js" %}"></script>
 </body>
 </html>

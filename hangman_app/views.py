@@ -41,7 +41,6 @@ class AddWord(View):
 
 
 class Play(View):
-    # TODO: choosing letters instead of writing them in form
     def get(self, request):
         logged = request.session.get('logged_user')
         request.session['counter'] = 0
